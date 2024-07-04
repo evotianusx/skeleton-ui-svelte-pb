@@ -4,7 +4,7 @@
 </script>
 
 <!-- App Shell -->
-<AppShell>
+<AppShell regionPage="scroll-smooth"> 
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
@@ -40,5 +40,6 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	<slot />
+	<div class='m-3 p-3'><slot /></div>
+	
 </AppShell>
