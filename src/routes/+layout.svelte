@@ -1,10 +1,19 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	export const ssr = false;
+
+	import { onMount } from 'svelte';
+	import { autoModeWatcher } from '@skeletonlabs/skeleton';
+
+	onMount(() => {
+		autoModeWatcher();
+	});
+	import { LightSwitch } from '@skeletonlabs/skeleton';
 </script>
 
 <!-- App Shell -->
-<AppShell regionPage="scroll-smooth"> 
+<AppShell regionPage="scroll-smooth">
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
@@ -36,10 +45,10 @@
 				>
 					GitHub
 				</a>
+				<LightSwitch />
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
-	<div class='m-3 p-3'><slot /></div>
-	
+	<div class="m-3 p-3"><slot /></div>
 </AppShell>
