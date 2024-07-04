@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { DataHandler ,Th} from '@vincjo/datatables';
-	import data from '$lib/static/data/data'
-	import Pagination from './Pagination.svelte';
+	import { DataHandler ,Th,Pagination,RowCount,Search} from '@vincjo/datatables';
+	import data from '$lib/static/data/data';
 	const handler = new DataHandler(data, { rowsPerPage: 20 });
 	const rows = handler.getRows();
 </script>
 
 <div class="table-container space-y-4">
+	<header><Search {handler} /></header>
 	<table class="table table-hover table-compact table-auto w-full">
 		<thead>
 			<tr>
@@ -25,5 +25,6 @@
 			{/each}
 		</tbody>
 	</table>
-	<Pagination {handler}  />
+	<footer class='container'><RowCount {handler}/><Pagination {handler}  /></footer>
+	
 </div>
