@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DataHandler ,Th,Pagination,RowCount,Search} from '@vincjo/datatables';
+	import { DataHandler, Th, Pagination, RowCount, Search } from '@vincjo/datatables';
 	import data from '$lib/static/data/data';
 	const handler = new DataHandler(data, { rowsPerPage: 20 });
 	const rows = handler.getRows();
@@ -25,6 +25,8 @@
 			{/each}
 		</tbody>
 	</table>
-	<footer class='container'><RowCount {handler}/><Pagination {handler}  /></footer>
-	
+	<div class="mx-auto w-full grid place-content-around">
+		<div class="mx-auto m-1"><RowCount {handler} /></div>
+		<div class="mx-auto"><Pagination {handler} /></div>
+	</div>
 </div>
