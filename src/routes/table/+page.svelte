@@ -3,8 +3,8 @@
 
 	import { DataHandler, Th, Pagination, RowCount, Search } from '@vincjo/datatables';
 	import MyTable from '$lib/components/MyTable.svelte';
-
-	let target = 'https://jsonplaceholder.typicode.com/todos';
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	let target = 'https://jsonplaceholder.typicode.com/posts';
 	let processing = true;
 	let handler;
 	let rows;
@@ -23,6 +23,7 @@
 </script>
 
 <div class="m-3 w-full">
+	<center>
 	<div class="container">
 		<label class="label w-1/4 m-1">
 			<span>Input</span>
@@ -34,39 +35,39 @@
 			/>
 		</label>
 		<button type="button" class="btn variant-filled m-1" on:click={click}>PROCESS</button>
-	</div>
 
-	<p>{target}</p>
+		<p>{target}</p>
 
-	{#if !processing}
-		<div class=" space-y-4 mt-6">
-			<header><Search {handler} /></header>
-			<table class="table table-hover table-compact table-auto w-full">
-				<thead>
-					<tr>
-						{#each fields as f}
-							<td>{f}</td>
-						{/each}
-					</tr>
-				</thead>
-				<tbody>
-					{#each $rows as row}
+		{#if !processing}
+			<div class=" space-y-4 mt-6">
+				<header><Search {handler} /></header>
+				<table class="table table-hover table-compact table-auto w-full">
+					<thead>
 						<tr>
 							{#each fields as f}
-								{#if typeof row[f] === 'boolean'}
-									<td><input type="checkbox" checked={row[f]} disabled /></td>
-								{:else}<td>{row[f]}</td>
-								{/if}
+								<td>{f}</td>
 							{/each}
 						</tr>
-					{/each}
-				</tbody>
-			</table>
-			<div class="mx-auto w-full grid place-content-around">
-				<div class="mx-auto m-1"><RowCount {handler} /></div>
-				<div class="mx-auto"><Pagination {handler} /></div>
+					</thead>
+					<tbody>
+						{#each $rows as row}
+							<tr>
+								{#each fields as f}
+									{#if typeof row[f] === 'boolean'}
+										<td><input type="checkbox" checked={row[f]} disabled /></td>
+									{:else}<td>{row[f]}</td>
+									{/if}
+								{/each}
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+				<div class="mx-auto w-full grid place-content-around">
+					<div class="mx-auto m-1"><RowCount {handler} /></div>
+					<div class="mx-auto"><Pagination {handler} /></div>
+				</div>
 			</div>
-		</div>
-	{:else}aaa
-	{/if}
+		{:else}<div class = "p-3 m-3 mx-auto " ><p class='mb-3'>Waiting on input</p><ProgressRadial value={undefined} width='w-12' /></div>
+		{/if}
+	</div></center>
 </div>
