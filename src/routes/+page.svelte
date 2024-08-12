@@ -6,9 +6,10 @@
 	import { Line } from 'svelte-chartjs'
 	
 	import 'chart.js/auto';
+	let toc;
 </script>
 
-<div class="justify-center mb-3">
+<div class="justify-center mb-3"  bind:this={toc}>
 	<TableOfContents>
 		<h1>Title</h1>
 	</TableOfContents>
@@ -54,9 +55,11 @@
 </div>
 
 
-<div class = "container m-3 h-1/6 w-1/6 justify-center mx-auto" >
+<div class = "container  justify-center mx-auto" >
 
 	  
 	  <Line {data} options={{ responsive: true }} />
 	  
 </div>
+
+<button type="button" class="btn-icon variant-filled fixed bottom-3 right-14 text-blue-500" on:click={(e)=>{toc.scrollIntoView()}} >⬆️</button>
