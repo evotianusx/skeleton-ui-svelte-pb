@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import { FileDropzone } from '@skeletonlabs/skeleton';
+	import { data } from '$lib/static/data/line';
+	
+	import { Line } from 'svelte-chartjs'
+	
+	import 'chart.js/auto';
 </script>
 
 <div class="justify-center mb-3">
@@ -46,4 +51,12 @@
 
 <div class="placeholder animate-pulse m-3 w-full h-1/3">
 	<FileDropzone name="files" class="h-full" data-toc-ignore />
+</div>
+
+
+<div class = "container m-3 h-1/6 w-1/6 justify-center mx-auto" >
+
+	  
+	  <Line {data} options={{ responsive: true }} />
+	  
 </div>

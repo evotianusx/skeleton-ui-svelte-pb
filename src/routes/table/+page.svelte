@@ -9,13 +9,16 @@
 	let handler;
 	let rows;
 	let fields;
+	let progress= 0;
 	async function click() {
 		processing = true;
 		let resp = await fetch(target);
+		progress = 20;
 		let body = await resp.json();
-
+		progress = 40;
 		handler = new DataHandler(body, { rowsPerPage: 15 });
 		rows = handler.getRows();
+		progress = 60;
 		fields = Object.keys(body[0]);
 		console.log(body[1]);
 		processing = false;
@@ -67,7 +70,7 @@
 					<div class="mx-auto"><Pagination {handler} /></div>
 				</div>
 			</div>
-		{:else}<div class = "p-3 m-3 mx-auto " ><p class='mb-3'>Waiting on input</p><ProgressRadial value={undefined} width='w-12' /></div>
+		{:else}<div class = "p-3 m-3 mx-auto " ><p class='mb-3'>Waiting on input</p><ProgressRadial value={progress} width='w-12' /></div>
 		{/if}
 	</div></center>
 </div>
