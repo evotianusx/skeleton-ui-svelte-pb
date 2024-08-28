@@ -1,4 +1,4 @@
-<script lang="ts">
+<script >
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import { FileDropzone } from '@skeletonlabs/skeleton';
 	import { data } from '$lib/static/data/line';
@@ -6,10 +6,10 @@
 	import { Line } from 'svelte-chartjs'
 	
 	import 'chart.js/auto';
-	let toc;
+	
 </script>
 
-<div class="justify-center mb-3"  bind:this={toc}>
+<div class="justify-center mb-3"  >
 	<TableOfContents>
 		<h1>Title</h1>
 	</TableOfContents>
@@ -55,11 +55,10 @@
 </div>
 
 
-<div class = "container  justify-center mx-auto" >
+<div class = "container justify-center mx-auto" >
 
 	  
 	  <Line {data} options={{ responsive: true }} />
 	  
 </div>
 
-<button type="button" class="btn-icon variant-filled fixed bottom-3 right-14 text-blue-500" on:click={(e)=>{toc.scrollIntoView()}} >⬆️</button>
