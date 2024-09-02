@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	export const ssr = false;
@@ -10,7 +10,7 @@
 		autoModeWatcher();
 	});
 	import { LightSwitch } from '@skeletonlabs/skeleton';
-	let headerx: HTMLElement;
+	let headerx;
 </script>
 
 <!-- App Shell -->
@@ -30,6 +30,7 @@
 		</AppBar>
 	</svelte:fragment>
 	<!-- Page Route Content -->
+	<!-- <slot/> -->
 	<div class="m-3 p-3" bind:this={headerx} ><slot /></div>
 	<button
 		type="button"
