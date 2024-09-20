@@ -1,26 +1,31 @@
 <script lang="ts">
 	import { DataHandler, Th, Pagination, RowCount, Search } from '@vincjo/datatables';
-	import data from '$lib/static/data/data';
+	export let data;
 	const handler = new DataHandler(data, { rowsPerPage: 20 });
 	const rows = handler.getRows();
+	const fields = Object.keys(data[0]);
+	// console.log(data[0]);
 </script>
 
-<div class="table-container space-y-4">
-	<header><Search {handler} /></header>
+<div class=" space-y-4 mt-4">
+	<header><Search {handler} class="input" type="text" /></header>
 	<table class="table table-hover table-compact table-auto w-full">
 		<thead>
 			<tr>
-				<Th {handler} orderBy="first_name">First name</Th>
-				<td>Last name</td>
-				<td>Email</td>
+				{#each fields as f}
+					<td>{f}</td>
+				{/each}
 			</tr>
 		</thead>
 		<tbody>
 			{#each $rows as row}
 				<tr>
-					<td>{row.first_name}</td>
-					<td>{row.last_name}</td>
-					<td>{row.email}</td>
+					{#each fields as f}
+						{#if typeof row[f] === 'boolean'}
+							<td><input type="checkbox" checked={row[f]} disabled /></td>
+						{:else}<td>{row[f]}</td>
+						{/if}
+					{/each}
 				</tr>
 			{/each}
 		</tbody>

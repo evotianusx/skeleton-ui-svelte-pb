@@ -1,15 +1,14 @@
-<script >
+<script>
 	import { TableOfContents, tocCrawler } from '@skeletonlabs/skeleton';
 	import { FileDropzone } from '@skeletonlabs/skeleton';
 	import { data } from '$lib/static/data/line';
-	
-	import { Line } from 'svelte-chartjs'
-	
+
+	import { Line } from 'svelte-chartjs';
+
 	import 'chart.js/auto';
-	
 </script>
 
-<div class="justify-center mb-3"  >
+<div class="justify-center mb-3">
 	<TableOfContents>
 		<h1>Title</h1>
 	</TableOfContents>
@@ -50,15 +49,18 @@
 	<p>Some Text</p>
 </div>
 
-<div class="placeholder animate-pulse m-3 w-full h-1/3">
+<div class="placeholder animate-pulse">
 	<FileDropzone name="files" class="h-full" data-toc-ignore />
 </div>
 
+<!-- <section class="grid grid-cols-4 gap-3">
+	{#each Array.from({ length: 20 }) as _, i}
+		<div class="grid gap-4">
+			<div>
+				<img src="https://picsum.photos/id/{i}/400/600" class="h-auto max-w-full rounded-lg" />
+			</div>
+		</div>
+	{/each}
+</section> -->
 
-<div class = "container justify-center mx-auto" >
-
-	  
-	  <Line {data} options={{ responsive: true }} />
-	  
-</div>
-
+<!-- <Line {data} options={{ responsive: true }} /> -->

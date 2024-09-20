@@ -1,82 +1,69 @@
 <script lang="ts">
 	// @ts-nocheck
-
+	import { ProgressRadial } from '@skeletonlabs/skeleton';
 	import { DataHandler, Th, Pagination, RowCount, Search } from '@vincjo/datatables';
 	import MyTable from '$lib/components/MyTable.svelte';
-	import { ProgressRadial } from '@skeletonlabs/skeleton';
+	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 	let target = 'https://jsonplaceholder.typicode.com/posts';
-	let processing = true;
-	let handler;
-	let rows;
-	let fields;
-	let progress = 0;
+	let processing = false;
+	let firstReq = true;
+
+	let data = [{}];
+	function sleep(ms) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
 	async function click() {
 		processing = true;
 		let resp = await fetch(target);
-		progress = 20;
+
 		let body = await resp.json();
-		progress = 40;
-		handler = new DataHandler(body, { rowsPerPage: 15 });
-		rows = handler.getRows();
-		progress = 60;
-		fields = Object.keys(body[0]);
-		console.log(body[1]);
+		data = body;
+
+		await sleep(5000);
 		processing = false;
 	}
+	// $: (data = data ? data : [{}]), console.log(data);
+	$: accordionToggle = firstReq | !processing;
 </script>
 
-<div class="m-3 w-full">
-	<center>
-		<div class="container">
-			<label class="label w-1/4 m-1">
-				<span>Input</span>
-				<input
-					class="input"
-					type="text"
-					placeholder="https://jsonplaceholder.typicode.com/todos"
-					bind:value={target}
-				/>
-			</label>
-			<button type="button" class="btn variant-filled m-1" on:click={click}>PROCESS</button>
-
-			<p>{target}</p>
-
-			{#if !processing}
-				<div class=" space-y-4 mt-6">
-					<header><Search {handler} /></header>
-					<table class="table table-hover table-compact table-auto w-full">
-						<thead>
-							<tr>
-								{#each fields as f}
-									<td>{f}</td>
-								{/each}
-							</tr>
-						</thead>
-						<tbody>
-							{#each $rows as row}
-								<tr>
-									{#each fields as f}
-										{#if typeof row[f] === 'boolean'}
-											<td><input type="checkbox" checked={row[f]} disabled /></td>
-										{:else}<td>{row[f]}</td>
-										{/if}
-									{/each}
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-					<div class="mx-auto w-full grid place-content-around">
-						<div class="mx-auto m-1"><RowCount {handler} /></div>
-						<div class="mx-auto"><Pagination {handler} /></div>
-					</div>
+<Accordion>
+	<AccordionItem bind:open={firstReq}>
+		<!-- <svelte:fragment slot="lead">(icon)</svelte:fragment> -->
+		<svelte:fragment slot="summary"><p class="w-full text text-primary">Form</p></svelte:fragment>
+		<svelte:fragment slot="content"
+			><div class="w-full flex flex-col justify-center items-center">
+				<div class="card variant-ghost-surface w-full lg:w-1/2 p-2">
+					<label class="label p-1">
+						<span>Input</span>
+						<input
+							class="input variant-ghost-primary"
+							type="text"
+							placeholder="https://jsonplaceholder.typicode.com/todos"
+							bind:value={target}
+						/>
+					</label>
+					<center
+						><button
+							type="button"
+							class="btn variant-filled"
+							on:click={() => {
+								click();
+								firstReq = false;
+							}}>PROCESS</button
+						></center
+					>
 				</div>
-			{:else}
-				<div class="p-3 m-3 mx-auto">
-					<p class="mb-3">Waiting on input</p>
-					<ProgressRadial value={progress} width="w-12" >{progress}</ProgressRadial>
-					
-				</div>
-			{/if}
-		</div></center
-	>
-</div>
+			</div></svelte:fragment
+		>
+	</AccordionItem>
+</Accordion>
+{#if processing}
+	<div class="w-full flex flex-col justify-center items-center">
+		<p class="mb-3">Waiting on input</p>
+		<ProgressRadial value={undefined}></ProgressRadial>
+	</div>
+{:else if data.length > 1}
+	<MyTable {data}></MyTable>
+{:else}
+	<h1>Nothing to see</h1>
+{/if}
